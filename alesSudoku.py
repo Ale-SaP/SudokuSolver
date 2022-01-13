@@ -1,5 +1,18 @@
 tablero = [
      #        #        #
+    [0, 0, 4, 7, 0, 0, 0, 0, 5],
+    [0, 2, 0, 0, 0, 0, 0, 8, 4],
+    [0, 0, 8, 0, 0, 0, 0, 0, 0],
+    [2, 0, 3, 0, 7, 0, 0, 0, 0],
+    [0, 0, 0, 5, 4, 8, 0, 0, 0],
+    [6, 0, 0, 0, 2, 0, 0, 0, 0],
+    [1, 9, 0, 0, 0, 0, 3, 0, 0],
+    [0, 0, 0, 9, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 5, 7, 0]
+    ]
+
+"""tablero = [
+     #        #        #
     [5, 0, 0, 6, 0, 1, 0, 0, 0],
     [0, 3, 0, 0, 7, 5, 0, 4, 9],
     [0, 0, 0, 9, 4, 8, 0, 0, 0],
@@ -10,6 +23,8 @@ tablero = [
     [0, 2, 0, 5, 1, 0, 3, 7, 0],
     [7, 0, 3, 4, 0, 0, 1, 8, 0]
     ]
+
+"""
 
 def square(grid, vert, hor):
     unavailable = []
@@ -51,7 +66,7 @@ def square(grid, vert, hor):
                 #for each list in the grid, add cells 6 to 9 to unavailable (if not = 0)
 
     else: print("error")
-    print(unavailable)
+    return(unavailable)
 
 
 def horizontal(grid, vert, hor):
@@ -59,15 +74,69 @@ def horizontal(grid, vert, hor):
     for cell in grid[vert]:
         if (cell != 0): unavailable.append(cell)
     #For cells in the horizontal grid, add to unavailable (if not = 0)
-    print(unavailable)
+    return(unavailable)
 
 def vertical(grid, vert, hor):
     unavailable = []
     for number in range(9):
         if (grid[number][hor] != 0): unavailable.append(grid[number][hor])
     #For cells in the horizontal grid, add to unavailable (if not = 0)
-    print(unavailable)
+    return(unavailable)
 
-square(tablero, 8, 8)
-horizontal(tablero, 8, 8)
-vertical(tablero, 8, 8)
+def listOfUnavailables(grid, vert, hor):
+    horizontalUnavailables = horizontal(grid, vert, hor)
+    verticalUnavailables = vertical(grid, vert, hor)
+    squareUnavailables = square(grid, vert, hor)
+    completeUnavailables = []
+
+    for element in (horizontalUnavailables + verticalUnavailables + squareUnavailables):
+        if (completeUnavailables.count(element) < 1): completeUnavailables.append(element)
+        else: pass
+    return(completeUnavailables)
+
+def check(grid):
+    verticalCount = 0
+    errors = 0
+    emptyCells = 0
+    for verticalList in grid:
+        cellCount = 0
+        for cell in verticalList:
+            unavailables = listOfUnavailables(grid, verticalCount, cellCount)
+            availables = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            for x in unavailables: 
+                availables.remove(x)
+            if ((cell in unavailables) > 1): 
+                grid[verticalCount][cellCount] = availables[1]
+            else: pass
+            if (cell == 0):  emptyCells += 1
+            cellCount += 1
+        verticalCount += 1
+    print(emptyCells) 
+    return(emptyCells)
+
+def start(grid):
+    timesDone = 0
+    while ((check(grid) != 0) and (timesDone < 10)):
+        timesDone += 1
+        verticalCount = 0
+        for verticalList in grid:
+            cellCount = 0
+            for cell in verticalList:
+                if (cell == 0): 
+
+                    unavailables = (listOfUnavailables(grid, verticalCount, cellCount))
+                    availables = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    for x in unavailables: 
+                        availables.remove(x)
+
+                    if (len(availables) == 1): 
+                        grid[verticalCount][cellCount] = availables[0]
+
+                else: pass
+
+                cellCount += 1
+            verticalCount += 1
+    print(grid, timesDone)
+
+
+start(tablero)
