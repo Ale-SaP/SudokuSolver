@@ -136,11 +136,8 @@ def start(sudoku):
 #If the value of the cell is 0, the listOfAvailables function will return what it indicates.
 #listOfAvailables also calls the square, horizontal and vertical funtions.
 
-#On the first empty cell, it'll iterate on the list of availables and set the first as the result.
-#After that, it will run the function again and set an available number as the second empty cell.
-#For each guess, it will guess the rest of the sudoku grid, this way it branches off.
-#Once the iteration of availables is finished, it is returned to 0 and availables are calculated again
-#This way, it tries every valid number until the correct result is found.
-
+#On the first empty cell, it'll set the first valid number as the result.
+#After that, it will run the funtion until the whole sudoku is solved without errors.
+#If there are no available numbers, it will backtrack to the cell before and try other possible combination.
 
 start(sudoku)
