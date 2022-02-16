@@ -1,4 +1,4 @@
 # SudokuSolver
-A sudoku solver, work in progress.
+A sudoku solver/game, work in progress.
 
-At the moment, the solver script DOES work, but the display can't accuratly display a solved one yet.
+At the moment, the solver script can solve hard Sudokus and can be displayed, but it can't be played.
